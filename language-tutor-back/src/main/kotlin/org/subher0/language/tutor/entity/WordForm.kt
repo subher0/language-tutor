@@ -25,8 +25,12 @@ class WordForm(
     @JoinColumn(name = "language_id")
     var language: Language? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "part_of_speech_id")
-    var partOfSpeech: PartOfSpeech? = null
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "word_form_to_part_of_speech", joinColumns = [
+        JoinColumn(name = "part_of_speech_id")
+    ], inverseJoinColumns = [
+        JoinColumn(name = "word_form_id")
+    ])
+    var partOfSpeech: Set<PartOfSpeech>? = null
 ) {
 }

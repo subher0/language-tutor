@@ -31,7 +31,7 @@ class Word(
     var partOfSpeech: PartOfSpeech? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "part_of_speech_id")
+    @JoinColumn(name = "word_form_id")
     var wordForm: WordForm? = null,
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
