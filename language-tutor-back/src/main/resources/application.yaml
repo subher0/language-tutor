@@ -1,0 +1,39 @@
+server:
+  servlet:
+    context-path: /language-tutor/api
+  port: 8080
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/initial.xml
+
+  datasource:
+    url: "jdbc:h2:file:~/language_tutor/db/dbfile;AUTO_SERVER=TRUE;INIT=CREATE SCHEMA IF NOT EXISTS language_tutor\\; SET SCHEMA language_tutor"
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          client-id: 'newClient'
+          client-secret: 'newClientSecret'
+          introspection-uri: ''
+
+keycloak:
+  realm: language-tutor
+  resource: language-tutor
+  auth-server-url: http://localhost:8080/language-tutor/auth
+  ssl-required: external
+  public-client: true
+  principal-attribute: preferred_username
+
+keycloak-embedded:
+  server:
+    contextPath: /language-tutor/auth
+    adminUser:
+      username: admin
+      password: admin
+    realmImportFile: language-tutor-realm.json

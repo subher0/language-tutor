@@ -11,13 +11,22 @@
         </sql>
     </changeSet>
 
+<!--    <changeSet id="1" author="subher0">-->
+<!--        <createTable tableName="user_profile" schemaName="language_tutor">-->
+<!--            <column name="id" type="bigint">-->
+<!--                <constraints  primaryKey="true"  nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="username" type="varchar(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
     <changeSet id="1" author="subher0">
-        <createTable tableName="language" schemaName="language_tutor">
+        <createTable tableName="lt_language" schemaName="language_tutor">
             <column  name="id" type="bigint">
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints  primaryKey="true"  nullable="false" primaryKeyName="pk_lt_language"/>
             </column>
             <column name="code" type="varchar(2)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_lt_language_code"/>
             </column>
             <column name="is_active" type="boolean">
                 <constraints nullable="false"/>
@@ -30,11 +39,11 @@
     </changeSet>
 
     <changeSet id="2" author="subher0">
-        <createSequence sequenceName="language_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_language_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="3" author="subher0">
-        <createTable tableName="part_of_speech" schemaName="language_tutor">
+        <createTable tableName="lt_part_of_speech" schemaName="language_tutor">
             <column  name="id" type="bigint">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
@@ -43,17 +52,17 @@
             </column>
             <column name="description" type="text"/>
             <column name="language_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_part_of_speech__language" references="language(id)"/>
+                <constraints nullable="false" foreignKeyName="fk_part_of_speech__language" references="lt_language(id)"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="4" author="subher0">
-        <createSequence sequenceName="part_of_speech_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_part_of_speech_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="5" author="subher0">
-        <createTable tableName="word_form" schemaName="language_tutor">
+        <createTable tableName="lt_word_form" schemaName="language_tutor">
             <column  name="id" type="bigint">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
@@ -63,30 +72,30 @@
             <column name="description" type="text"/>
             <column name="is_root_form" type="boolean"/>
             <column name="language_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_word_form__language" references="language(id)"/>
+                <constraints nullable="false" foreignKeyName="fk_word_form__language" references="lt_language(id)"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="6" author="subher0">
-        <createSequence sequenceName="word_form_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_word_form_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="7" author="subher0">
-        <createTable tableName="word_form_to_part_of_speech" schemaName="language_tutor">
+        <createTable tableName="lt_word_form_to_part_of_speech" schemaName="language_tutor">
             <column name="part_of_speech_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_wftpos_part_of_speech"
-                             references="part_of_speech(id)"/>
+                             references="lt_part_of_speech(id)"/>
             </column>
             <column name="word_form_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_wftpos_word_form"
-                             references="word_form(id)"/>
+                             references="lt_word_form(id)"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet  id="8"  author="subher0">
-        <createTable tableName="word" schemaName="language_tutor">
+        <createTable tableName="lt_word" schemaName="language_tutor">
             <column  name="id" type="bigint">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
@@ -96,34 +105,34 @@
             <column name="description" type="text"/>
             <column name="create_time" type="timestamp"/>
             <column name="language_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_word__language" references="language(id)"/>
+                <constraints nullable="false" foreignKeyName="fk_word__language" references="lt_language(id)"/>
             </column>
             <column name="form_id" type="bigint">
-                <constraints foreignKeyName="fk_word__word_form" references="word_form(id)"/>
+                <constraints foreignKeyName="fk_word__word_form" references="lt_word_form(id)"/>
             </column>
             <column name="part_of_speech_id" type="bigint">
-                <constraints foreignKeyName="fk_word__part_of_speech" references="part_of_speech(id)"/>
+                <constraints foreignKeyName="fk_word__part_of_speech" references="lt_part_of_speech(id)"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="9" author="subher0">
-        <createSequence sequenceName="word_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_word_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="10" author="subher0">
-        <createTable tableName="word_to_form" schemaName="language_tutor">
+        <createTable tableName="lt_word_to_form" schemaName="language_tutor">
             <column name="word_id" type="bigint">
-                <constraints foreignKeyName="fk_word" references="word(id)" nullable="false"/>
+                <constraints foreignKeyName="fk_word" references="lt_word(id)" nullable="false"/>
             </column>
             <column name="word_form_id" type="bigint">
-                <constraints foreignKeyName="form_fk" references="word(id)" nullable="false"/>
+                <constraints foreignKeyName="fk_form" references="lt_word(id)" nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="11" author="subher0">
-        <createTable tableName="word_attachment" schemaName="language_tutor">
+        <createTable tableName="lt_word_attachment" schemaName="language_tutor">
             <column name="id" type="bigint">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
@@ -131,33 +140,33 @@
             <column name="attachment_url" type="varchar(2048)"/>
             <column name="hyperlink" type="varchar(2048)"/>
             <column name="word_id" type="bigint">
-                <constraints foreignKeyName="fk_word_attachment__word" references="word(id)" nullable="false"/>
+                <constraints foreignKeyName="fk_word_attachment__word" references="lt_word(id)" nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="12" author="subher0">
-        <createSequence sequenceName="word_attachment_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_word_attachment_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="13" author="subher0">
-        <createTable tableName="word_view" schemaName="language_tutor">
+        <createTable tableName="lt_word_view" schemaName="language_tutor">
             <column name="id" type="bigint">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="word_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_word_views__word"/>
+                <constraints nullable="false" foreignKeyName="fk_word_views__word" references="lt_word(id)"/>
             </column>
             <column name="create_time" type="timestamp"/>
         </createTable>
     </changeSet>
 
     <changeSet id="14" author="subher0">
-        <createSequence sequenceName="word_view_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
+        <createSequence sequenceName="lt_word_view_seq" startValue="51" incrementBy="50" schemaName="language_tutor"/>
     </changeSet>
 
     <changeSet id="15" author="subher0">
-        <createIndex tableName="part_of_speech" indexName="uq_idx_part_of_speech_to_language">
+        <createIndex tableName="lt_part_of_speech" indexName="uq_idx_part_of_speech_to_language">
             <column name="name"/>
             <column name="language_id"/>
         </createIndex>

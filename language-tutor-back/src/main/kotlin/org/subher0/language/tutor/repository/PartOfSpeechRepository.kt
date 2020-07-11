@@ -8,4 +8,5 @@ import org.subher0.language.tutor.entity.PartOfSpeech
 @Repository
 interface PartOfSpeechRepository : JpaRepository<PartOfSpeech, Long> {
     fun existsByNameAndLanguage(name: String, language: Language): Boolean
+    fun findAllByLanguage(language: Language): List<PartOfSpeech>
 }

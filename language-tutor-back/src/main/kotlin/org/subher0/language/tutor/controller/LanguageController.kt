@@ -16,28 +16,24 @@ import org.subher0.language.tutor.service.LanguageService
 @Api(tags = ["Languages"])
 class LanguageController @Autowired constructor(
         private val languageService: LanguageService
-){
+) {
     @ApiOperation(value = "Create a new language")
     @PostMapping
-    fun createLanguage(@RequestBody body: LanguageDto): ResponseEntity<EntityDto<LanguageDto>> {
-        return languageService.createLanguage(body)
-    }
+    fun createLanguage(@RequestBody body: LanguageDto): ResponseEntity<EntityDto<LanguageDto>>
+            = languageService.createLanguage(body)
 
     @ApiOperation(value = "List all languages")
     @GetMapping
-    fun listLanguages(): ResponseEntity<CountableDto<LanguageDto>> {
-        return languageService.listLanguages()
-    }
+    fun listLanguages(): ResponseEntity<CountableDto<LanguageDto>>
+            = languageService.listLanguages()
 
     @ApiOperation(value = "Activate language")
     @PutMapping(path = ["/{id}/activate"])
-    fun activateLanguage(@PathVariable(name = "id") id: Long): ResponseEntity<EmptyResponse> {
-        return languageService.activateLanguage(id)
-    }
+    fun activateLanguage(@PathVariable(name = "id") id: Long): ResponseEntity<EmptyResponse>
+            = languageService.activateLanguage(id)
 
     @ApiOperation(value = "Get active language")
     @GetMapping(path = ["/active"])
-    fun getActiveLanguage(): ResponseEntity<EntityDto<LanguageDto>> {
-        return languageService.getActiveLanguage()
-    }
+    fun getActiveLanguage(): ResponseEntity<EntityDto<LanguageDto>>
+            = languageService.getActiveLanguage()
 }
